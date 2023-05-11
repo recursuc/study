@@ -53,7 +53,7 @@ class SegmentTree {
   }
 }
 
-// To continue using this segment tree, you can create an instance of the SegmentTree class and call its methods:
+// To continue using this segment tree, you can create an instance of the SegmentTree class and call its methods:11111
 const nums = [1, 3, 5, 7, 9, 11];
 const segTree = new SegmentTree(nums);
 console.log(segTree.sumRange(0, 2)); // Output: 9
