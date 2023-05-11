@@ -1,3 +1,5 @@
+type Parser<T> = (input: string) => Failure | Success<T>
+
 class Failure {
     type = "failure";
     constructor(public input: string, public message: string) {}
@@ -201,3 +203,23 @@ function sepBy<T, U>(parser: Parser<T>, separator: Parser<U>): Parser<T[]> {
       return new Success(result, nextInput);
     };
   }
+
+
+  function bind<T, U>(parser: Parser<T>, f: (x: T) => Parser<U>): Parser<U> {
+    return (input: string) => {
+      const r1 = parser(input);
+      if (r1 instanceof Failure) {
+        return r1;
+      }
+      const r2 = f(r1.result)(r1.input);
+      if (r2 instanceof Failure) {
+        return r2;
+      }
+      return r2;
+    };
+  }
+
+  function succeed<T>(result: T): Parser<T> {
+    return (input: string) => new Success(result, input);
+  }
+  
